@@ -5,9 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library</title>
     <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
 </head>
 <body>
-    hello
+    <table id="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Pages</th>
+                <th>Read</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+        </tbody>
+    </table>
+    <br>
+    <button id="showDialog">Add a Book</button>
+    <dialog id="dialog">
+        <form method="dialog">
+            <label for="title">Enter Book Title: </label>
+            <input id="title" type="text" required>
+            <label for="author">Enter Book Author: </label>
+            <input id="author" type="text" required>
+            <label for="pages">Enter Book Pages: </label>
+            <input id="pages" type="number" step="1" min="1" required>
+            <label for="read">Have You Read the Book: </label>
+            <select id="read" required>
+                <option selected value="false">Not Yet</option>
+                <option value="true>">Have Read</option>
+            </select>
+            <button id="submitBtn" value="submit">Submit</button>
+            <button id="cancelBtn" value="cancel">Cancel</button>
+        </form>
+    </dialog>
 </body>
 </html>
