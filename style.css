@@ -1,4 +1,4 @@
-table, th, td{
+th, td{
     border:1px solid black;
 }
 
@@ -6,4 +6,13 @@ form{
     display:grid;
     grid-template-columns: 1fr 1fr;
     gap:20px;
+}
+
+dialog p{
+    font-weight:bold;
+    text-align: center;
+}
+
+#abSubmitBtn, #abCancelBtn, #ebCancelBtn {
+    grid-column: 1/-1;
 }

@@ -22,22 +22,44 @@
         </tbody>
     </table>
     <br>
-    <button id="showDialog">Add a Book</button>
-    <dialog id="dialog">
+    <button id="showAddBookDialog">Add a Book</button>
+    <dialog id="addBookDialog">
+        <p>Add a New Book</p>
         <form method="dialog">
-            <label for="title">Enter Book Title: </label>
-            <input id="title" type="text" required>
-            <label for="author">Enter Book Author: </label>
-            <input id="author" type="text" required>
-            <label for="pages">Enter Book Pages: </label>
-            <input id="pages" type="number" step="1" min="1" required>
-            <label for="read">Have You Read the Book: </label>
-            <select id="read" required>
+            <label for="abTitle">Enter Book Title: </label>
+            <input id="abTitle" type="text" required>
+            <label for="abAuthor">Enter Book Author: </label>
+            <input id="abAuthor" type="text" required>
+            <label for="abPages">Enter Book Pages: </label>
+            <input id="abPages" type="number" step="1" min="1" required>
+            <label for="abRead">Read Status: </label>
+            <select id="abRead" required>
                 <option selected value="false">Not Yet</option>
-                <option value="true>">Have Read</option>
+                <option value="true">Have Read</option>
             </select>
-            <button id="submitBtn" value="submit">Submit</button>
-            <button id="cancelBtn" value="cancel">Cancel</button>
+            <button id="abSubmitBtn" value="submit">Submit</button>
+            <button id="abCancelBtn" value="cancel">Cancel</button>
+        </form>
+    </dialog>
+    <dialog id="editBookDialog">
+        <p>Edit an Existing Book</p>
+        <form method="dialog">
+            <label for="ebID">Book ID:</label>
+            <input id="ebID" type="text" disabled required>
+            <label for="ebTitle">Book Title: </label>
+            <input id="ebTitle" type="text" required>
+            <label for="ebAuthor">Book Author: </label>
+            <input id="ebAuthor" type="text" required>
+            <label for="ebpages">Book Pages: </label>
+            <input id="ebPages" type="number" step="1" min="1" required>
+            <label for="ebRead">Read Status: </label>
+            <select id="ebRead" required>
+                <option value="false">Not Yet</option>
+                <option value="true">Have Read</option>
+            </select>
+            <button id="ebEditBtn" value="edit">Save</button>
+            <button id="ebDeleteBtn" value="delete">Delete</button>
+            <button id="ebCancelBtn" value="cancel">Cancel</button>
         </form>
     </dialog>
 </body>

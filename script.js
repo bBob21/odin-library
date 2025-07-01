@@ -1,27 +1,26 @@
 const library = [];
-const submitBtn = document.getElementById("submitBtn");
-const formDialog = document.getElementById("dialog");
-const showBtn = document.getElementById("showDialog");
-const cancelBtn = document.getElementById("cancelBtn")
+const abFormDialog = document.getElementById("addBookDialog");
+const abShowBtn = document.getElementById("showAddBookDialog");
+const abCancelBtn = document.getElementById("abCancelBtn")
 
-showBtn.addEventListener("click", () => {
-    formDialog.showModal();
+abShowBtn.addEventListener("click", () => {
+    abFormDialog.showModal();
 });
 
-formDialog.addEventListener("close", () => {
-    if (formDialog.returnValue === "submit"){
-        const title = document.getElementById("title").value;
-        const author = document.getElementById("author").value;
-        const pages = parseInt(document.getElementById("pages").value);
-        const read = document.getElementById("read").value === "true";
+abFormDialog.addEventListener("close", () => {
+    if (abFormDialog.returnValue === "submit"){
+        const title = document.getElementById("abTitle").value;
+        const author = document.getElementById("abAuthor").value;
+        const pages = parseInt(document.getElementById("abPages").value);
+        const read = document.getElementById("abRead").value === "true";
 
         addBookToLibrary(author, title, pages, read);
     }
 })
 
-cancelBtn.addEventListener("click", () =>{
-    formDialog.returnValue = "cancel";
-    formDialog.close()
+abCancelBtn.addEventListener("click", () =>{
+    abFormDialog.returnValue = "cancel";
+    abFormDialog.close()
 })
 
 function Book(id, title, author, pages, read){
@@ -50,15 +49,79 @@ function displayBooksFromLibrary(){
         bookElement.classList.add('bookRow')
         bookElement.id = book.id
 
+        // loop through attributes of Book
         Object.values(book).forEach(val => {
             let attrElement = document.createElement('td');
             attrElement.textContent = val;
             bookElement.appendChild(attrElement);
         })
+        let editBtn = document.createElement('button');
+        editBtn.textContent = 'Edit';
+        editBtn.addEventListener("click", () => {
+            editBookDialog(book);
+        })
+        bookElement.appendChild(editBtn)
+
         table.appendChild(bookElement);
     }
 }
 
-addBookToLibrary("1book","writin",213,false)
-addBookToLibrary("bo2ok","auyth",93,true)
+function editBookDialog(book){
+    const id = document.getElementById("ebID");
+    const title = document.getElementById("ebTitle");
+    const author = document.getElementById("ebAuthor");
+    const pages = document.getElementById("ebPages");
+    const read = document.getElementById("ebRead");
+    id.value = book.id;
+    title.value = book.title;
+    author.value = book.author;
+    pages.value = book.pages;
+    read.value = book.read;
+
+    const ebFormDialog = document.getElementById("editBookDialog");
+    const ebCancelBtn = document.getElementById("ebCancelBtn");
+    const ebDeleteBtn = document.getElementById("ebDeleteBtn");
+    ebFormDialog.showModal();
+    ebFormDialog.addEventListener("close", () => {
+        if (ebFormDialog.returnValue === "delete"){
+            deleteBook(id.value);
+        }
+        else if (ebFormDialog.returnValue === "edit"){
+            editBook(id.value, title.value, author.value, pages.value, read.value);
+        }
+        displayBooksFromLibrary();
+    })
+    ebCancelBtn.addEventListener("click", () => {
+        ebFormDialog.returnValue = "cancel";
+        ebFormDialog.close();
+    })
+    ebDeleteBtn.addEventListener("click", () => {
+        ebFormDialog.returnValue = "delete";
+        ebFormDialog.close();
+    })
+}
+
+function deleteBook(id){
+    for (let i = 0; i < library.length; i++){
+        if (id === library[i].id){
+            library.splice(i,1);
+        }
+    }
+}
+
+function editBook(id, title, author, pages, read){
+    for (let book of library){
+        if (book.id === id){
+            book.title = title;
+            book.author = author;
+            book.pages = pages;
+            book.read = read;
+        } 
+    }
+    console.log(library)
+}
+
+addBookToLibrary("1984","George Orwell",328,true)
+addBookToLibrary("To Kill a Mockingbird","Harper Lee",384,false)
+addBookToLibrary("Heart of Darkness","Joseph Conrad",120,true)
 displayBooksFromLibrary()
