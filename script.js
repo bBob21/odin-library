@@ -3,6 +3,9 @@ const abFormDialog = document.getElementById("addBookDialog");
 const abShowBtn = document.getElementById("showAddBookDialog");
 const abCancelBtn = document.getElementById("abCancelBtn")
 
+// TODO
+//  use a prototype function instead
+// seperate read from edit
 abShowBtn.addEventListener("click", () => {
     abFormDialog.showModal();
 });
@@ -55,12 +58,15 @@ function displayBooksFromLibrary(){
             attrElement.textContent = val;
             bookElement.appendChild(attrElement);
         })
+        let editBtnContainer = document.createElement('td');
         let editBtn = document.createElement('button');
         editBtn.textContent = 'Edit';
+        editBtn.classList.add("editBtn")
         editBtn.addEventListener("click", () => {
             editBookDialog(book);
         })
-        bookElement.appendChild(editBtn)
+        editBtnContainer.appendChild(editBtn)
+        bookElement.appendChild(editBtnContainer)
 
         table.appendChild(bookElement);
     }

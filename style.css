@@ -1,7 +1,24 @@
-th, td{
-    border:1px solid black;
+body{
+    font-size:18px;
+    display:grid;
+    gap:24px;
+    padding:24px;
+    justify-items: center;
 }
 
+th, td{
+    border:1px solid black;
+    padding:8px;
+}
+
+tr td:last-child{
+    border:none;
+}
+
+table{
+    border-collapse: collapse;
+    width: 80%;
+}
 form{
     display:grid;
     grid-template-columns: 1fr 1fr;
@@ -15,4 +32,19 @@ dialog p{
 
 #abSubmitBtn, #abCancelBtn, #ebCancelBtn {
     grid-column: 1/-1;
+}
+
+.editBtn{
+    padding:4px 12px;
+}
+
+#showAddBookDialog {
+    width:auto;
+    padding:4px 12px;
+}
+
+.header{
+    font-size: 32px;
+    font-weight: bold;
+    margin:0;
 }
