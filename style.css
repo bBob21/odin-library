@@ -34,17 +34,21 @@ dialog p{
     grid-column: 1/-1;
 }
 
-.editBtn{
+button{
     padding:4px 12px;
 }
 
 #showAddBookDialog {
     width:auto;
-    padding:4px 12px;
 }
 
 .header{
     font-size: 32px;
     font-weight: bold;
     margin:0;
+}
+
+.btnContainer {
+    display:grid;
+    gap:20px;
 }

@@ -3,9 +3,6 @@ const abFormDialog = document.getElementById("addBookDialog");
 const abShowBtn = document.getElementById("showAddBookDialog");
 const abCancelBtn = document.getElementById("abCancelBtn")
 
-// TODO
-//  use a prototype function instead
-// seperate read from edit
 abShowBtn.addEventListener("click", () => {
     abFormDialog.showModal();
 });
@@ -15,7 +12,6 @@ abFormDialog.addEventListener("close", () => {
         const title = document.getElementById("abTitle").value;
         const author = document.getElementById("abAuthor").value;
         const pages = parseInt(document.getElementById("abPages").value);
-        const read = document.getElementById("abRead").value === "true";
 
         addBookToLibrary(author, title, pages, read);
     }
@@ -26,7 +22,7 @@ abCancelBtn.addEventListener("click", () =>{
     abFormDialog.close()
 })
 
-function Book(id, title, author, pages, read){
+function Book(id, title, author, pages){
     if (!new.target){
         throw Error("Use the 'new' operator to call this constructor");
     }
@@ -34,12 +30,16 @@ function Book(id, title, author, pages, read){
     this.title = title;
     this.author = author;
     this.pages = pages;
-    this.read = read;
+    this.read = false;
 }
 
-function addBookToLibrary(title, author, pages, read){
+Book.prototype.toggleRead = function () {
+    this.read = !this.read
+}
+
+function addBookToLibrary(title, author, pages){
     id = crypto.randomUUID();
-    let book = new Book(id, title, author, pages, read);
+    let book = new Book(id, title, author, pages);
     library.push(book);
     displayBooksFromLibrary();
 }
@@ -58,15 +58,25 @@ function displayBooksFromLibrary(){
             attrElement.textContent = val;
             bookElement.appendChild(attrElement);
         })
-        let editBtnContainer = document.createElement('td');
+        let btnContainer = document.createElement('td');
+        btnContainer.classList.add("btnContainer");
         let editBtn = document.createElement('button');
         editBtn.textContent = 'Edit';
-        editBtn.classList.add("editBtn")
+        editBtn.classList.add("editBtn");
         editBtn.addEventListener("click", () => {
             editBookDialog(book);
         })
-        editBtnContainer.appendChild(editBtn)
-        bookElement.appendChild(editBtnContainer)
+        let readBtn = document.createElement('button');
+        readBtn.classList.add("readBtn");
+        readBtn.textContent = "Toggle Read";
+        readBtn.addEventListener("click", () => {
+            book.toggleRead();
+            displayBooksFromLibrary();
+        })
+
+        btnContainer.appendChild(readBtn);
+        btnContainer.appendChild(editBtn);
+        bookElement.appendChild(btnContainer);
 
         table.appendChild(bookElement);
     }
@@ -77,12 +87,10 @@ function editBookDialog(book){
     const title = document.getElementById("ebTitle");
     const author = document.getElementById("ebAuthor");
     const pages = document.getElementById("ebPages");
-    const read = document.getElementById("ebRead");
     id.value = book.id;
     title.value = book.title;
     author.value = book.author;
     pages.value = book.pages;
-    read.value = book.read;
 
     const ebFormDialog = document.getElementById("editBookDialog");
     const ebCancelBtn = document.getElementById("ebCancelBtn");
@@ -93,10 +101,11 @@ function editBookDialog(book){
             deleteBook(id.value);
         }
         else if (ebFormDialog.returnValue === "edit"){
-            editBook(id.value, title.value, author.value, pages.value, read.value);
+            editBook(id.value, title.value, author.value, pages.value);
         }
         displayBooksFromLibrary();
     })
+    
     ebCancelBtn.addEventListener("click", () => {
         ebFormDialog.returnValue = "cancel";
         ebFormDialog.close();
@@ -115,16 +124,14 @@ function deleteBook(id){
     }
 }
 
-function editBook(id, title, author, pages, read){
+function editBook(id, title, author, pages){
     for (let book of library){
         if (book.id === id){
             book.title = title;
             book.author = author;
             book.pages = pages;
-            book.read = read;
         } 
     }
-    console.log(library)
 }
 
 addBookToLibrary("1984","George Orwell",328,true)
